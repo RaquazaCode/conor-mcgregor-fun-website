@@ -355,8 +355,93 @@ body {
         --cursor-size: 200px;
         /* Smaller cursor on mobile */
     }
+}
 
-    .main-title {
-        font-size: 4rem;
+/* --- Fight Data Ticker --- */
+#ticker-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 15;
+    /* sits between background (10) and UI (20) */
+    pointer-events: none;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.ticker-side {
+    width: 35%;
+    /* Leaves 30% gap in center */
+    height: 100vh;
+    display: flex;
+    gap: 4px;
+    /* Tight columns */
+    /* Fade mask at top and bottom */
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+.ticker-col {
+    flex: 1;
+    height: 100%;
+    position: relative;
+    border-right: 1px solid rgba(0, 255, 255, 0.1);
+    /* Subtle cyber/neon separator */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.ticker-col:last-child {
+    border-right: none;
+}
+
+.ticker-track {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+}
+
+/* Vertical Text Styling */
+.ticker-text {
+    /* Vertical writing mode for Latin text rotates it 90deg clockwise */
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    /* Font Styling */
+    font-family: 'Courier New', monospace;
+    /* Data feel */
+    font-size: 10px;
+    /* Microtext */
+    font-weight: 700;
+    color: rgba(0, 255, 255, 0.35);
+    /* Dim Neon Cyan */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    padding: 20px 0;
+    /* Spacing between data loops */
+    opacity: 0.8;
+}
+
+/* Scroll Animations */
+@keyframes scroll-up {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-50%);
+    }
+}
+
+@keyframes scroll-down {
+    0% {
+        transform: translateY(-50%);
+    }
+
+    100% {
+        transform: translateY(0);
     }
 }

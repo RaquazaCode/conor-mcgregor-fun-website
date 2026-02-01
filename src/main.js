@@ -85,3 +85,74 @@ function spawnTrail(x, y) {
 // Styles are now in style.css
 
 animate();
+
+/* --- Ticker Logic --- */
+import { fightData } from './fightData.js';
+
+function initTicker() {
+  const leftSide = document.getElementById('ticker-left');
+  const rightSide = document.getElementById('ticker-right');
+
+  if (!leftSide || !rightSide) return; // Guard
+
+  const COLUMNS_PER_SIDE = 5;
+
+  // Prepare long data string
+  // Concatenate all fight tickers with separator.
+  // We use a custom separator with spacing.
+  const fullString = fightData.map(f => f.ticker).join('  ///  ');
+  // Repeat it enough times to ensure it fills reasonable height
+  const repeatedString = `${fullString}  ///  ${fullString}  ///  ${fullString}`;
+
+  function createColumns(container, count) {
+    container.innerHTML = ''; // Clear
+
+    for (let i = 0; i < count; i++) {
+      const col = document.createElement('div');
+      col.className = 'ticker-col';
+
+      const track = document.createElement('div');
+      track.className = 'ticker-track';
+
+      // Determine direction: alternates
+      // First (0) Up, Second (1) Down...
+      const isUp = i % 2 === 0;
+      const animationName = isUp ? 'scroll-up' : 'scroll-down';
+
+      // Randomize duration slightly for rhythm
+      // Longer duration = slower speed. 
+      // We want ~150s for a very long string.
+      // Random factor 100-180s
+      const baseDuration = 120 + Math.random() * 80;
+
+      track.style.animationName = animationName;
+      track.style.animationDuration = `${baseDuration}s`;
+      track.style.animationTimingFunction = 'linear';
+      track.style.animationIterationCount = 'infinite';
+
+      // Stagger start offset to de-sync columns
+      track.style.animationDelay = `-${Math.random() * baseDuration}s`;
+
+      // Create two identical text blocks for the seamless loop
+      const textBlock1 = document.createElement('div');
+      textBlock1.className = 'ticker-text';
+      textBlock1.innerText = repeatedString;
+
+      const textBlock2 = document.createElement('div');
+      textBlock2.className = 'ticker-text';
+      textBlock2.innerText = repeatedString;
+
+      track.appendChild(textBlock1);
+      track.appendChild(textBlock2);
+
+      col.appendChild(track);
+      container.appendChild(col);
+    }
+  }
+
+  createColumns(leftSide, COLUMNS_PER_SIDE);
+  createColumns(rightSide, COLUMNS_PER_SIDE);
+}
+
+// Run init
+initTicker();

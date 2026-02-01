@@ -35,6 +35,12 @@
       </div>
     </div>
 
+    <!-- Fight Data Ticker Layer (Fullscreen) -->
+    <div id="ticker-layer">
+      <div class="ticker-side left" id="ticker-left"></div>
+      <div class="ticker-side right" id="ticker-right"></div>
+    </div>
+
     <!-- UI Layer (Text, Stats) -->
     <div class="ui-layer">
       <h1 class="main-title">
@@ -49,41 +55,37 @@
               <path d="M12 20V10M18 20V4M6 20v-4" />
             </svg>
           </div>
-          <!-- Fight Data Ticker Layer -->
-          <div id="ticker-layer">
-            <div class="ticker-side left" id="ticker-left"></div>
-            <div class="ticker-side right" id="ticker-right"></div>
-          </div>
+        </div>
 
-          <!-- Interface Layer -->
-          <div class="hero-content">
-            <h1 class="hero-title" id="parallax-title">CONOR MCGREGOR</h1>
-            <div class="stats-board" id="stats-board">
-              <div class="board-header">
-                <img src="https://flagcdn.com/ie.svg" alt="Ireland" class="flag-icon" />
-                <div class="fighter-info">
-                  <h2>THE NOTORIOUS</h2>
-                  <span class="meta">CHAMP-CHAMP • DUB</span>
-                </div>
+        <!-- Interface Layer -->
+        <div class="hero-content">
+          <!-- Title removed from bottom left -->
+          <div class="stats-board" id="stats-board">
+            <div class="board-header">
+              <img src="https://flagcdn.com/ie.svg" alt="Ireland" class="flag-icon" />
+              <div class="fighter-info">
+                <h2>THE NOTORIOUS</h2>
+                <span class="meta">CHAMP-CHAMP • DUB</span>
               </div>
-              <div class="stats-grid">
-                <div class="stat-item"><span class="value">13s</span><span class="label">Fastest Title KO</span></div>
-                <div class="stat-item"><span class="value">2</span><span class="label">Divisions Champ</span></div>
-                <div class="stat-item"><span class="value">19</span><span class="label">Knockouts</span></div>
-                <div class="stat-item"><span class="value">2.4M</span><span class="label">PPV Buys (UFC 229)</span>
-                </div>
-                <div class="stat-item"><span class="value">22</span><span class="label">MMA Wins</span></div>
-                <div class="stat-item"><span class="value">#1</span><span class="label">Highest Paid '21</span></div>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-item"><span class="value">13s</span><span class="label">Fastest Title KO</span></div>
+              <div class="stat-item"><span class="value">2</span><span class="label">Divisions Champ</span></div>
+              <div class="stat-item"><span class="value">19</span><span class="label">Knockouts</span></div>
+              <div class="stat-item"><span class="value">2.4M</span><span class="label">PPV Buys (UFC 229)</span>
               </div>
+              <div class="stat-item"><span class="value">22</span><span class="label">MMA Wins</span></div>
+              <div class="stat-item"><span class="value">#1</span><span class="label">Highest Paid '21</span></div>
             </div>
           </div>
         </div>
-
-        <!-- Custom Cursor Elements -->
-        <div id="cursor-octagon" class="cursor-octagon"></div>
-        <div id="cursor-trails"></div>
       </div>
-      <script type="module" src="/src/main.js"></script>
+
+      <!-- Custom Cursor Elements -->
+      <div id="cursor-octagon" class="cursor-octagon"></div>
+      <div id="cursor-trails"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,362 @@
+:root {
+    --gold: #d4af37;
+    --green: #169b62;
+    /* Irish Green */
+    --orange: #ff883e;
+    /* Irish Orange */
+    --dark: #121212;
+    --text: #ffffff;
+
+    /* Cursor position variables, updated by JS */
+    --mx: 50vw;
+    --my: 50vh;
+    --cursor-size: 300px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    cursor: none;
+    /* Custom cursor */
+}
+
+body {
+    font-family: 'Oswald', sans-serif;
+    /* Default font for UI */
+    background-color: var(--dark);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* --- Layout & Layers --- */
+#app {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.bg-wrap,
+.hero-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-img {
+    height: 75vh;
+    /* Further reduced height to clear title */
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    position: absolute;
+    bottom: 0;
+    z-index: 5;
+}
+
+/* Layer 1: Base Style */
+.layer-base .bg-img {
+    opacity: 0.2;
+    /* Low opacity background */
+    filter: grayscale(100%);
+}
+
+/* Layer 2: Reveal Style */
+#reveal-layer {
+    /* The Magic Mask */
+    /* We use an SVG data URI for the octagon shape to mask this layer */
+    mask-image: url("data:image/svg+xml,%3Csvg width='300' height='300' viewBox='0 0 300 300' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M87.868 0L212.132 0L300 87.868V212.132L212.132 300H87.868L0 212.132V87.868L87.868 0Z' fill='black'/%3E%3C/svg%3E");
+    mask-size: var(--cursor-size);
+    mask-repeat: no-repeat;
+    /* Centering the mask on the cursor coordinates */
+    mask-position: calc(var(--mx) - var(--cursor-size)/2) calc(var(--my) - var(--cursor-size)/2);
+    pointer-events: none;
+    /* Let clicks pass through if needed */
+    z-index: 10;
+}
+
+.layer-reveal .bg-img {
+    opacity: 1;
+    /* Bright background */
+}
+
+/* --- UI Layer --- */
+.ui-layer {
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Allow interaction with elements directly, but pass through otherwise */
+    padding: 40px;
+}
+
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 8rem);
+    line-height: 0.9;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    display: flex;
+    flex-direction: column;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.main-title span {
+    display: block;
+}
+
+/* --- Stats Board --- */
+.stats-container {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    pointer-events: auto;
+    /* Enable interaction */
+}
+
+.stats-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    /* Interaction hint */
+    transition: opacity 0.3s;
+}
+
+.stats-toggle:hover {
+    opacity: 0.8;
+}
+
+.stats-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stats-label {
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+.stats-board {
+    position: absolute;
+    bottom: 70px;
+    /* Above the toggle */
+    left: 0;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 24px;
+    border-radius: 4px;
+    width: 400px;
+
+    /* Hidden State */
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    transform-origin: bottom left;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+}
+
+/* Hover on container reveals board */
+.stats-container:hover .stats-board {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.board-header {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+}
+
+.flag-icon {
+    width: 40px;
+    height: auto;
+    border-radius: 2px;
+}
+
+.fighter-info h2 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-bottom: 4px;
+    color: var(--gold);
+}
+
+.fighter-info .meta {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    opacity: 0.7;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-item .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+}
+
+.stat-item .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    opacity: 0.5;
+    letter-spacing: 0.5px;
+}
+
+/* --- Cursor Visuals --- */
+.cursor-octagon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--cursor-size);
+    height: var(--cursor-size);
+    pointer-events: none;
+    z-index: 100;
+    transform: translate(calc(var(--mx) - 50%), calc(var(--my) - 50%));
+}
+
+/* We'll use JS to rotate this element or an inner element */
+.cursor-octagon::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* Octagon Border SVG */
+    background-image: url("data:image/svg+xml,%3Csvg width='300' height='300' viewBox='0 0 300 300' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M88.5 1.5L211.5 1.5L298.5 88.5V211.5L211.5 298.5H88.5L1.5 211.5V88.5L88.5 1.5Z' stroke='%23d4af37' stroke-width='3'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: rotate 10s linear infinite, quiver 0.3s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes quiver {
+    0% {
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+
+    25% {
+        margin-left: 1px;
+        margin-top: 1px;
+    }
+
+    50% {
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+
+    75% {
+        margin-left: -1px;
+        margin-top: -1px;
+    }
+
+    100% {
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+}
+
+/* Trail Pieces (injected or defined here) */
+.trail-piece {
+    position: absolute;
+    width: 60px;
+    /* Smaller than main cursor */
+    height: 60px;
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    /* Gold */
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 50;
+    animation: fadeOut 0.8s forwards;
+    /* Proper Octagon Clip */
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.2) rotate(90deg);
+    }
+}
+
+/* Parallax Effect Classes (Applied via JS) */
+.parallax-item {
+    transition: transform 0.1s linear;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    :root {
+        --cursor-size: 200px;
+        /* Smaller cursor on mobile */
+    }
+
+    .main-title {
+        font-size: 4rem;
+    }
+}

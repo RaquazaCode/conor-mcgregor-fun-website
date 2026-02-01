@@ -121,9 +121,9 @@ function initTicker() {
 
       // Randomize duration slightly for rhythm
       // Longer duration = slower speed. 
-      // We want ~150s for a very long string.
-      // Random factor 100-180s
-      const baseDuration = 120 + Math.random() * 80;
+      // User requested extremely slow speed.
+      // Random factor 1000-1200s
+      const baseDuration = 1000 + Math.random() * 200;
 
       track.style.animationName = animationName;
       track.style.animationDuration = `${baseDuration}s`;

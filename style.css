@@ -410,13 +410,13 @@ body {
     writing-mode: vertical-rl;
     text-orientation: mixed;
     /* Font Styling */
-    font-family: 'Courier New', monospace;
-    /* Data feel */
-    font-size: 10px;
-    /* Microtext */
-    font-weight: 700;
-    color: rgba(0, 255, 255, 0.35);
-    /* Dim Neon Cyan */
+    font-family: 'Oswald', sans-serif;
+    /* Cohesive with site */
+    font-size: 24px;
+    /* Large and legible */
+    font-weight: 500;
+    color: #ffffff;
+    /* White for readability */
     text-transform: uppercase;
     letter-spacing: 2px;
     white-space: nowrap;
